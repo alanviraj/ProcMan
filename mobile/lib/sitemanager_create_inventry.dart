@@ -1,11 +1,16 @@
 // ignore: unused_import
+import 'dart:convert';
+import 'dart:html';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile/sitemanager_inventry.dart';
+import 'package:mobile/sitemanager_inventry_dashboard.dart';
 import 'package:mobile/supplier_dashboard.dart';
 
 import 'package:mobile/supplier.dart';
@@ -22,20 +27,62 @@ class _SitemanagerCreateInventryState extends State<SitemanagerCreateInventry> {
   final _formKey = GlobalKey<FormState>();
 
   // Future save() async {
-  //   var res = await http.post("http://localhost:5000/user/userlogin",
+  //   // print(inventry.item_name +
+  //   //     inventry.item_description +
+  //   //     inventry.site_name +
+  //   //     inventry.item_capacity +
+  //   //     inventry.available_quantity +
+  //   //     inventry.measuring_unit +
+  //   //     inventry.unit_price);
+    
+  //   var res = await http.post(
+  //       "http://localhost:5000/inventory/insert-inventory",
   //       headers: <String, String>{
   //         'Context-Type': 'application/json;charSet=UTF-8'
   //       },
-  //       body: <String, String>{
-  //         'userEmail': user.userEmail,
-  //         'userPassword': user.userPassword
+  //       // <String, String>
+  //       body: {
+  //         'item_name': inventry.item_name,
+  //         'item_description': inventry.item_description,
+  //         'site_name': inventry.site_name,
+  //         'item_capacity': inventry.item_capacity,
+  //         'available_quantity': inventry.available_quantity,
+  //         'measuring_unit': inventry.measuring_unit,
+  //         'unit_price': inventry.unit_price
   //       });
+  //   print('response new : ${res.body}');
+
+
+
+
   //   Navigator.push(
-  //       context, new MaterialPageRoute(builder: (context) => SitemanagerDashboard()));
+  //       context,
+  //       new MaterialPageRoute(
+  //           builder: (context) => SiteManagerInventryDashboard()));
   // }
 
+  Future save() async {
+  
+  await http.post(
+    Uri.parse('http://localhost:5000/inventory/insert-inventory'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+          'item_name': inventry.item_name,
+          'item_description': inventry.item_description,
+          'site_name': inventry.site_name,
+          'item_capacity': inventry.item_capacity,
+          'available_quantity': inventry.available_quantity,
+          'measuring_unit': inventry.measuring_unit,
+          'unit_price': inventry.unit_price
+    }),
+  );
+} 
+
+
   Color textfieldcolor = Colors.blue;
-  User user = User("", "", "", "", "", "", "", "");
+  Inventry inventry = Inventry("", "", "", "", "", "", "");
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -50,7 +97,7 @@ class _SitemanagerCreateInventryState extends State<SitemanagerCreateInventry> {
       body: SingleChildScrollView(
         child: Container(
           color: Colors.blue,
-          height: size.height,
+          height: size.height * 1.5,
           child: Column(
             children: [
               Container(
@@ -73,21 +120,21 @@ class _SitemanagerCreateInventryState extends State<SitemanagerCreateInventry> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: SizedBox(
-                                  height: size.height / 3,
-                                  width: size.width,
-                                  child: Image.asset(
-                                      "images/sitemanager_add_inventry.png")),
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.all(10.0),
+                            //   child: SizedBox(
+                            //       height: size.height / 3,
+                            //       width: size.width,
+                            //       child: Image.asset(
+                            //           "images/sitemanager_add_inventry.png")),
+                            // ),
                             Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: TextFormField(
-                                controller:
-                                    TextEditingController(text: user.userEmail),
+                                controller: TextEditingController(
+                                    text: inventry.item_name),
                                 onChanged: (value) {
-                                  user.userEmail = value;
+                                  inventry.item_name = value;
                                 },
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -135,10 +182,10 @@ class _SitemanagerCreateInventryState extends State<SitemanagerCreateInventry> {
                             Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: TextFormField(
-                                controller:
-                                    TextEditingController(text: user.userEmail),
+                                controller: TextEditingController(
+                                    text: inventry.item_description),
                                 onChanged: (value) {
-                                  user.userEmail = value;
+                                  inventry.item_description = value;
                                 },
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -186,10 +233,10 @@ class _SitemanagerCreateInventryState extends State<SitemanagerCreateInventry> {
                             Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: TextFormField(
-                                controller:
-                                    TextEditingController(text: user.userEmail),
+                                controller: TextEditingController(
+                                    text: inventry.site_name),
                                 onChanged: (value) {
-                                  user.userEmail = value;
+                                  inventry.site_name = value;
                                 },
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -237,10 +284,10 @@ class _SitemanagerCreateInventryState extends State<SitemanagerCreateInventry> {
                             Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: TextFormField(
-                                controller:
-                                    TextEditingController(text: user.userEmail),
+                                controller: TextEditingController(
+                                    text: inventry.item_capacity),
                                 onChanged: (value) {
-                                  user.userEmail = value;
+                                  inventry.item_capacity = value;
                                 },
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -288,10 +335,10 @@ class _SitemanagerCreateInventryState extends State<SitemanagerCreateInventry> {
                             Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: TextFormField(
-                                controller:
-                                    TextEditingController(text: user.userEmail),
+                                controller: TextEditingController(
+                                    text: inventry.available_quantity),
                                 onChanged: (value) {
-                                  user.userEmail = value;
+                                  inventry.available_quantity = value;
                                 },
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -339,10 +386,10 @@ class _SitemanagerCreateInventryState extends State<SitemanagerCreateInventry> {
                             Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: TextFormField(
-                                controller:
-                                    TextEditingController(text: user.userEmail),
+                                controller: TextEditingController(
+                                    text: inventry.measuring_unit),
                                 onChanged: (value) {
-                                  user.userEmail = value;
+                                  inventry.measuring_unit = value;
                                 },
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -390,10 +437,10 @@ class _SitemanagerCreateInventryState extends State<SitemanagerCreateInventry> {
                             Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: TextFormField(
-                                controller:
-                                    TextEditingController(text: user.userEmail),
+                                controller: TextEditingController(
+                                    text: inventry.unit_price),
                                 onChanged: (value) {
-                                  user.userEmail = value;
+                                  inventry.unit_price = value;
                                 },
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -451,7 +498,7 @@ class _SitemanagerCreateInventryState extends State<SitemanagerCreateInventry> {
                                             BorderRadius.circular(30.0)),
                                     onPressed: () {
                                       if (_formKey.currentState!.validate()) {
-                                        //save();
+                                        save();
                                       } else {
                                         print("no");
                                       }

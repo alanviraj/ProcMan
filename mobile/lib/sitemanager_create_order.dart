@@ -17,7 +17,6 @@ class SitemanagerCreateOrder extends StatefulWidget {
   _SitemanagerCreateOrderState createState() =>
       _SitemanagerCreateOrderState();
 }
-
 class _SitemanagerCreateOrderState extends State<SitemanagerCreateOrder> {
   final _formKey = GlobalKey<FormState>();
 

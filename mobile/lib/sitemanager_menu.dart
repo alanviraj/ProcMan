@@ -38,7 +38,6 @@ List<SitemanagerMenuData> menuDatas = [
     dash_url: "BillPayments()",
   ),
 ];
-
 List<SitemanagerInventryMenuData> menuInventryDatas = [
   SitemanagerInventryMenuData(
     dash_title: "View All Inventries",

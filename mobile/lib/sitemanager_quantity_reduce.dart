@@ -7,9 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile/supplier_dashboard.dart';
-
 import 'package:mobile/supplier.dart';
-
 class SitemanagerQuantityReduceInventry extends StatefulWidget {
   const SitemanagerQuantityReduceInventry({Key? key}) : super(key: key);
 
